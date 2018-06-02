@@ -27,6 +27,7 @@ def classify0(X, dataSet, labels, k):
             y = voteLabel
     return y
 
+
 def file2matrix(filename):
     fr = open(filename)
     numberOfLines = len(fr.readlines())
@@ -82,7 +83,7 @@ def img2vector(filename):
 
 def handwritingClassTest():
     hwLabels = []
-    trainingFileList = os.listdir('trainingDigits')
+    trainingFileList = os.listdir(r'./01 KNN/trainingDigits')
     m = len(trainingFileList)
     trainingMat = np.zeros((m, 1024))
     for i in range(m):
@@ -90,15 +91,15 @@ def handwritingClassTest():
         fileStr = fileNameStr.split('.')[0]
         classNumStr = int(fileStr.split('_')[0])
         hwLabels.append(classNumStr)
-        trainingMat[i, :] = img2vector('trainingDigits/%s' % fileNameStr)
-    testFileList = os.listdir('testDigits')
+        trainingMat[i, :] = img2vector(r'./01 KNN/trainingDigits/%s' % fileNameStr)
+    testFileList = os.listdir(r'./01 KNN/testDigits')
     errorCount = 0.0
     mTest = len(testFileList)
     for i in range(mTest):
         fileNameStr = testFileList[i]
         fileStr = fileNameStr.split('.')[0]
         classNumStr = int(fileStr.split('_')[0])
-        vectorUnderTest = img2vector('testDigits/%s' % fileNameStr)
+        vectorUnderTest = img2vector(r'./01 KNN/testDigits/%s' % fileNameStr)
         classifierResult = classify0(vectorUnderTest, trainingMat, hwLabels, 3)
         print "the classifier came back with: %d, the real answer is: %d" % (classifierResult, classNumStr)
         if (classifierResult != classNumStr):
@@ -119,7 +120,7 @@ if __name__ == '__main__':
     # ----------------------------------------------------
     # handwriting recognition
 
-    testVector = img2vector('testDigits/0_13.txt')
+    testVector = img2vector(r'./01 KNN/testDigits/0_13.txt')
     handwritingClassTest()
 
 
